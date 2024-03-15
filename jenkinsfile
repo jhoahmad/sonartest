@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/jhoahmad/sonartest.git'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                sh 'mvn clean install sonar:sonar'
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Build and SonarQube analysis passed!'
+        }
+        failure {
+            echo 'Build or SonarQube analysis failed!'
+        }
+    }
+}
