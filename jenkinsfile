@@ -1,26 +1,27 @@
 pipeline {
     agent any
-    
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/jhoahmad/sonartest.git'
+                script {
+                    git branch: 'master', credentialsId: 'sonarid', url: 'https://github.com/jhoahmad/sonartest.git'
+                }
             }
         }
-        
         stage('Build') {
             steps {
-                sh 'mvn clean install sonar:sonar'
+                // Jalankan proses build
             }
         }
-    }
-    
-    post {
-        success {
-            echo 'Build and SonarQube analysis passed!'
-        }
-        failure {
-            echo 'Build or SonarQube analysis failed!'
+        stage('SonarQube analysis') {
+            steps {
+                script {
+                    def scannerHome = tool 'SonarQube Scanner'; // Gunakan alat SonarQube Scanner yang telah diinstal di Jenkins
+                    withSonarQubeEnv('mysonar1') {
+                        sh "${scannerHome}/bin/sonar-scanner"
+                    }
+                }
+            }
         }
     }
 }
