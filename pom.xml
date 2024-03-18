@@ -9,7 +9,7 @@
     
     <properties>
         <sonar.host.url>http://192.168.156.55:9000</sonar.host.url>
-        <sonar.login>sqa_0392e274efbe81ac3eedfc529ad07f0d1a8f4ef2</sonar.login>
+        <sonar.login>sqa_e68caec4910b4394c76c22d6155458f5625dad3e</sonar.login>
     </properties>
     
     <dependencies>
